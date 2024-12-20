@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:satagro_recruitment_app/presentation/polygons_map/bloc/polygons_map_bloc.dart';
 import 'package:satagro_recruitment_app/presentation/polygons_map/view/polygons_map_view.dart';
 
 class PolygonsMapPage extends StatelessWidget {
@@ -6,6 +8,9 @@ class PolygonsMapPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const PolygonsMapView();
+    return BlocProvider(
+      create: (context) => PolygonsMapBloc(),
+      child: const PolygonsMapView(),
+    );
   }
 }
