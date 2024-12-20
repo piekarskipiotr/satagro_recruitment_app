@@ -19,3 +19,33 @@ final class UpdateGoogleMapCameraPositionToCurrentLocation extends PolygonsMapEv
   @override
   List<Object?> get props => [];
 }
+
+final class AddPolygonPoint extends PolygonsMapEvent {
+  const AddPolygonPoint(this.position);
+
+  final LatLng position;
+
+  @override
+  List<Object?> get props => [position];
+}
+
+final class SavePolygon extends PolygonsMapEvent {
+  const SavePolygon();
+
+  @override
+  List<Object?> get props => [];
+}
+
+final class RemovePolygon extends PolygonsMapEvent {
+  const RemovePolygon();
+
+  @override
+  List<Object?> get props => [];
+}
+
+final class UndoLastPolygonPoint extends PolygonsMapEvent {
+  const UndoLastPolygonPoint();
+
+  @override
+  List<Object?> get props => [];
+}
