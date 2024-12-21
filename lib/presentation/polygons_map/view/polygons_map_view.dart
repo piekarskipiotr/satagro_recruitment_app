@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:satagro_recruitment_app/presentation/polygons_map/bloc/polygons_map_bloc.dart';
-import 'package:satagro_recruitment_app/presentation/polygons_map/widgets/polygon_map_google_map_view.dart';
 import 'package:satagro_recruitment_app/presentation/polygons_map/widgets/polygons_map_error_view.dart';
 import 'package:satagro_recruitment_app/presentation/polygons_map/widgets/polygons_map_fab_buttons/polygons_map_fab_buttons_view.dart';
+import 'package:satagro_recruitment_app/presentation/polygons_map/widgets/polygons_map_google_map_view.dart';
 
 class PolygonsMapView extends StatelessWidget {
   const PolygonsMapView({super.key});
@@ -41,7 +41,7 @@ class PolygonsMapView extends StatelessWidget {
         return Scaffold(
           body: isError
               ? PolygonsMapErrorView(error: error)
-              : PolygonMapGoogleMapView(
+              : PolygonsMapGoogleMapView(
                   polygons: polygons,
                   polygonPoints: polygonPoints,
                   onAddPolygonPoint: (position) {

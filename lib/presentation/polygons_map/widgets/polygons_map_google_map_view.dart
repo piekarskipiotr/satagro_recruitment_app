@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class PolygonMapGoogleMapView extends StatelessWidget {
-  const PolygonMapGoogleMapView({
+class PolygonsMapGoogleMapView extends StatelessWidget {
+  const PolygonsMapGoogleMapView({
     required this.onMapCreated,
     required this.onAddPolygonPoint,
     required this.polygons,
