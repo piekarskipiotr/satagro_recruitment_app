@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:satagro_recruitment_app/presentation/two_dimensional_table/bloc/two_dimensional_table_bloc.dart';
-import 'package:satagro_recruitment_app/presentation/two_dimensional_table/widgets/two_dimensional_table_data_table_view.dart';
-import 'package:satagro_recruitment_app/presentation/two_dimensional_table/widgets/two_dimensional_table_error_view.dart';
+import 'package:satagro_recruitment_app/presentation/two_dimensional_table/widgets/widgets.dart';
 
 class TwoDimensionalTableView extends StatelessWidget {
   const TwoDimensionalTableView({super.key});
