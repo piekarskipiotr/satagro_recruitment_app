@@ -18,31 +18,36 @@ class TwoDimensionalTableDataTableView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DataTable2(
-      scrollController: ScrollController(),
-      isVerticalScrollBarVisible: true,
-      isHorizontalScrollBarVisible: true,
-      fixedLeftColumns: 1,
-      minWidth: 900,
-      fixedCornerColor: Colors.transparent,
-      fixedColumnsColor: Colors.grey.shade300,
-      headingRowColor: WidgetStateProperty.all(Colors.grey.shade300),
-      columns: [
-        const DataColumn2(label: SizedBox.shrink()),
-        ...columnsData.map((e) => DataColumn2(label: TwoDimensionalTableDataDefaultView(value: e))),
-      ],
-      rows: rowsData.map((e) {
-        final cells = [
-          DataCell(
-            TwoDimensionalTableDataFixedRowView(value: e.name, sortType: e.sortType),
-            onTap: () {
-              onRowSortPressed.call(e.id);
-            },
-          ),
-          ...e.values.map((e) => DataCell(TwoDimensionalTableDataDefaultView(value: e))),
-        ];
-        return DataRow2(cells: cells);
-      }).toList(),
+    return Center(
+      child: SizedBox(
+        height: 320, // Fixed height for showcase of two-dimensional scroll
+        child: DataTable2(
+          scrollController: ScrollController(),
+          isVerticalScrollBarVisible: true,
+          isHorizontalScrollBarVisible: true,
+          fixedLeftColumns: 1,
+          minWidth: 900,
+          fixedCornerColor: Colors.transparent,
+          fixedColumnsColor: Colors.grey.shade300,
+          headingRowColor: WidgetStateProperty.all(Colors.grey.shade300),
+          columns: [
+            const DataColumn2(label: SizedBox.shrink()),
+            ...columnsData.map((e) => DataColumn2(label: TwoDimensionalTableDataDefaultView(value: e))),
+          ],
+          rows: rowsData.map((e) {
+            final cells = [
+              DataCell(
+                TwoDimensionalTableDataFixedRowView(value: e.name, sortType: e.sortType),
+                onTap: () {
+                  onRowSortPressed.call(e.id);
+                },
+              ),
+              ...e.values.map((e) => DataCell(TwoDimensionalTableDataDefaultView(value: e))),
+            ];
+            return DataRow2(cells: cells);
+          }).toList(),
+        ),
+      ),
     );
   }
 }
