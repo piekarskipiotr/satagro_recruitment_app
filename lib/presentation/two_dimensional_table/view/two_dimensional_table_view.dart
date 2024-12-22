@@ -16,8 +16,8 @@ class TwoDimensionalTableView extends StatelessWidget {
       builder: (context, state) {
         final error = state.error;
         final isError = error != null && error.isNotEmpty;
-        final columnsData = state.columns;
-        final rowsData = state.rows;
+        final columnsData = state.columnsData;
+        final rowsData = state.rowsData;
 
         return Scaffold(
           body: SafeArea(

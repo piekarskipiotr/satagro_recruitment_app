@@ -12,53 +12,14 @@ part 'two_dimensional_table_state.dart';
 
 class TwoDimensionalTableBloc extends Bloc<TwoDimensionalTableEvent, TwoDimensionalTableState> {
   TwoDimensionalTableBloc()
-      : super(
-          TwoDimensionalTableState(
-            columns: List.generate(8, (index) => index + 1),
-            rows: [
-              ChemicalElementRowModel(
-                name: 'Wodór',
-                values: List.generate(8, (_) => (Random().nextDouble() * 1000).roundToDouble() / 10),
-              ),
-              ChemicalElementRowModel(
-                name: 'Hel',
-                values: List.generate(8, (_) => (Random().nextDouble() * 1000).roundToDouble() / 10),
-              ),
-              ChemicalElementRowModel(
-                name: 'Lit',
-                values: List.generate(8, (_) => (Random().nextDouble() * 1000).roundToDouble() / 10),
-              ),
-              ChemicalElementRowModel(
-                name: 'Beryl',
-                values: List.generate(8, (_) => (Random().nextDouble() * 1000).roundToDouble() / 10),
-              ),
-              ChemicalElementRowModel(
-                name: 'Bor',
-                values: List.generate(8, (_) => (Random().nextDouble() * 1000).roundToDouble() / 10),
-              ),
-              ChemicalElementRowModel(
-                name: 'Węgiel',
-                values: List.generate(8, (_) => (Random().nextDouble() * 1000).roundToDouble() / 10),
-              ),
-              ChemicalElementRowModel(
-                name: 'Azot',
-                values: List.generate(8, (_) => (Random().nextDouble() * 1000).roundToDouble() / 10),
-              ),
-              ChemicalElementRowModel(
-                name: 'Woda',
-                values: List.generate(8, (_) => (Random().nextDouble() * 1000).roundToDouble() / 10),
-              ),
-            ],
-          ),
-        ) {
+      : super(TwoDimensionalTableState(columnsData: _generateColumnsData(), rowsData: _generateRowsData())) {
     on<SortData>(_onSortData);
   }
 
   Future<void> _onSortData(SortData event, Emitter<TwoDimensionalTableState> emit) async {
     final modelId = event.id;
-    final model = state.rows.singleWhere((e) => e.id == modelId);
+    final model = state.rowsData.singleWhere((e) => e.id == modelId);
     final sortType = DataTableSortType.values.getNext(model.sortType);
-
     final sortedData = switch (sortType) {
       DataTableSortType.asc => List<double>.from(model.values)..sort((a, b) => a.compareTo(b)),
       DataTableSortType.dsc => List<double>.from(model.values)..sort((a, b) => b.compareTo(a)),
@@ -66,10 +27,22 @@ class TwoDimensionalTableBloc extends Bloc<TwoDimensionalTableEvent, TwoDimensio
     };
 
     final updatedModel = model.copyWith(values: sortedData, sortType: sortType);
+    final modelIndex = state.rowsData.indexOf(model);
+    final rowsData = List<ChemicalElementRowModel>.from(state.rowsData)..[modelIndex] = updatedModel;
+    emit(state.copyWith(rowsData: rowsData));
+  }
 
-    final modelIndex = state.rows.indexOf(model);
-    final rows = List<ChemicalElementRowModel>.from(state.rows)..[modelIndex] = updatedModel;
+  static List<int> _generateColumnsData() {
+    return List.generate(8, (index) => index + 1);
+  }
 
-    emit(state.copyWith(rows: rows));
+  static List<ChemicalElementRowModel> _generateRowsData() {
+    final chemicalElementNames = ['Wodór', 'Hel', 'Lit', 'Beryl', 'Bor', 'Węgiel', 'Azot', 'Woda'];
+    return chemicalElementNames.map((name) {
+      return ChemicalElementRowModel(
+        name: name,
+        values: List.generate(8, (_) => (Random().nextDouble() * 1000).roundToDouble() / 10),
+      );
+    }).toList();
   }
 }

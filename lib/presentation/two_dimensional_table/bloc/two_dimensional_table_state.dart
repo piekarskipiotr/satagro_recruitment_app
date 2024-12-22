@@ -2,26 +2,26 @@ part of 'two_dimensional_table_bloc.dart';
 
 class TwoDimensionalTableState extends Equatable {
   const TwoDimensionalTableState({
-    required this.columns,
-    required this.rows,
+    required this.columnsData,
+    required this.rowsData,
     this.error,
   });
 
-  final List<int> columns;
-  final List<ChemicalElementRowModel> rows;
+  final List<int> columnsData;
+  final List<ChemicalElementRowModel> rowsData;
   final String? error;
 
   TwoDimensionalTableState copyWith({
-    List<ChemicalElementRowModel>? rows,
+    List<ChemicalElementRowModel>? rowsData,
     String? error,
   }) {
     return TwoDimensionalTableState(
-      rows: rows ?? this.rows,
-      columns: columns,
+      rowsData: rowsData ?? this.rowsData,
+      columnsData: columnsData,
       error: error,
     );
   }
 
   @override
-  List<Object?> get props => [columns, rows, error];
+  List<Object?> get props => [rowsData, columnsData, error];
 }
