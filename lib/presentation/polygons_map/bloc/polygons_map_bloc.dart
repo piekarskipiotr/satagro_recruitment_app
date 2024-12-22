@@ -35,6 +35,11 @@ class PolygonsMapBloc extends Bloc<PolygonsMapEvent, PolygonsMapState> {
     Emitter<PolygonsMapState> emit,
   ) async {
     try {
+      /*
+        For simplicity's sake I have made that in case of lack of localization permissions or problems
+        with the location service an error will be thrown, which will be handled later so that
+        the map is not displayed
+       */
       await GeolocationHelper.checkPermissionStatus();
       emit(state.copyWith(isLocalizationPermissionGranted: true));
     } catch (error) {
