@@ -1,16 +1,46 @@
-# satagro_recruitment_app
+## Setup Instructions
 
-A new Flutter project.
+### 1. Obtain a Google Maps API Key
+To use Google Maps, you need an API key from the Google Cloud Platform:
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
+2. Create a new project or select an existing project.
+3. Navigate to **APIs & Services > Credentials**.
+4. Click on **Create credentials** and select **API key**.
+5. Enable the following APIs for your project:
+    - Maps SDK for Android
+    - Maps SDK for iOS
 
-## Getting Started
+### 2. Add API Key to Your Flutter Project
 
-This project is a starting point for a Flutter application.
+#### Android
 
-A few resources to get you started if this is your first Flutter project:
+1. Open your Flutter project and navigate to the `android/app/src/main/AndroidManifest.xml` file.
+2. Add the following `<meta-data>` tag inside the `<application>` tag:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+   ```xml
+   <meta-data android:name="com.google.android.geo.API_KEY"
+              android:value="<API KEY HERE>"/>
+   ```
+   Replace `<API KEY HERE>` with your actual Google Maps API key.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### iOS
+
+1. Open your Flutter project and navigate to the `ios/Runner/AppDelegate.swift` file.
+2. Add the following code snippet inside the `application` method:
+
+   ```swift
+   import GoogleMaps
+
+   @UIApplicationMain
+   @objc class AppDelegate: FlutterAppDelegate {
+     override func application(
+       _ application: UIApplication,
+       didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+     ) -> Bool {
+       GMSServices.provideAPIKey("<API KEY HERE>")
+       GeneratedPluginRegistrant.register(with: self)
+       return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+     }
+   }
+   ```
+   Replace `<API KEY HERE>` with your actual Google Maps API key.
