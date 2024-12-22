@@ -14,12 +14,32 @@ part 'polygons_map_state.dart';
 
 class PolygonsMapBloc extends Bloc<PolygonsMapEvent, PolygonsMapState> {
   PolygonsMapBloc() : super(const PolygonsMapState()) {
+    on<RequestLocalizationPermission>(_onRequestLocalizationPermission);
     on<InitializeGoogleMapController>(_onInitializeGoogleMapController);
     on<UpdateGoogleMapCameraPositionToCurrentLocation>(_onUpdateGoogleMapCameraPositionToCurrentLocation);
     on<AddPolygonPoint>(_onAddPolygonPoint);
     on<SavePolygon>(_onSavePolygon);
     on<RemovePolygon>(_onRemovePolygon);
     on<UndoLastPolygonPoint>(_onUndoLastPolygonPoint);
+
+    add(const RequestLocalizationPermission());
+  }
+
+  /*
+    Due to Android limitations, it is necessary to request location permissions before generating Google Maps widgets.
+    This ensures that the user's current location is displayed correctly, as failing to obtain the permission
+    beforehand can result in the map not showing the updated user location.
+   */
+  Future<void> _onRequestLocalizationPermission(
+    RequestLocalizationPermission event,
+    Emitter<PolygonsMapState> emit,
+  ) async {
+    try {
+      await GeolocationHelper.checkPermissionStatus();
+      emit(state.copyWith(isLocalizationPermissionGranted: true));
+    } catch (error) {
+      emit(state.copyWith(error: ErrorMessageHelper.parseError(error)));
+    }
   }
 
   Future<void> _onInitializeGoogleMapController(

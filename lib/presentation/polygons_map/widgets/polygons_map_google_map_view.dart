@@ -21,6 +21,7 @@ class PolygonsMapGoogleMapView extends StatelessWidget {
       padding: const EdgeInsets.only(right: 16, bottom: 24),
       initialCameraPosition: const CameraPosition(target: LatLng(0, 0)),
       myLocationEnabled: true,
+      zoomControlsEnabled: false,
       polygons: polygons,
       polylines: {
         if (polygonPoints.length > 1)

@@ -33,35 +33,58 @@ class PolygonsMapView extends StatelessWidget {
       builder: (context, state) {
         final error = state.error;
         final isError = error != null && error.isNotEmpty;
-        final polygons = {...?state.polygons};
-        final polygonPoints = [...?state.polygonPoints];
+        final isLocalizationPermissionGranted = state.isLocalizationPermissionGranted;
 
         return Scaffold(
-          body: isError
-              ? PolygonsMapErrorView(error: error)
-              : PolygonsMapGoogleMapView(
-                  polygons: polygons,
-                  polygonPoints: polygonPoints,
-                  onAddPolygonPoint: (position) {
-                    _addPolygonPoint(context, position);
+          body: SafeArea(
+            child: _buildContentView(
+              context: context,
+              state: state,
+              error: error,
+              isError: isError,
+              isLocalizationPermissionGranted: isLocalizationPermissionGranted,
+            ),
+          ),
+          floatingActionButton: isError || !isLocalizationPermissionGranted
+              ? null
+              : PolygonsMapFabButtonsView(
+                  onSavePolygon: () {
+                    _savePolygon(context);
                   },
-                  onMapCreated: (googleMapController) {
-                    _initializeGoogleMapController(context, googleMapController);
+                  onRemovePolygon: () {
+                    _removePolygon(context);
+                  },
+                  onUndoLastPolygonPoint: () {
+                    _undoLastPolygonPoint(context);
                   },
                 ),
-          floatingActionButton: PolygonsMapFabButtonsView(
-            onSavePolygon: () {
-              _savePolygon(context);
-            },
-            onRemovePolygon: () {
-              _removePolygon(context);
-            },
-            onUndoLastPolygonPoint: () {
-              _undoLastPolygonPoint(context);
-            },
-          ),
           floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
         );
+      },
+    );
+  }
+
+  Widget _buildContentView({
+    required BuildContext context,
+    required PolygonsMapState state,
+    required String? error,
+    required bool isError,
+    required bool isLocalizationPermissionGranted,
+  }) {
+    if (isError) return PolygonsMapErrorView(error: error ?? '');
+    if (!isLocalizationPermissionGranted) return const PolygonsMapLoadingView();
+
+    final polygons = {...?state.polygons};
+    final polygonPoints = [...?state.polygonPoints];
+
+    return PolygonsMapGoogleMapView(
+      polygons: polygons,
+      polygonPoints: polygonPoints,
+      onAddPolygonPoint: (position) {
+        _addPolygonPoint(context, position);
+      },
+      onMapCreated: (googleMapController) {
+        _initializeGoogleMapController(context, googleMapController);
       },
     );
   }

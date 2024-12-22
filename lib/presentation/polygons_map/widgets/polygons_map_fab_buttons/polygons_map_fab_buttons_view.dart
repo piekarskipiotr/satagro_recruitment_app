@@ -16,7 +16,7 @@ class PolygonsMapFabButtonsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8),
+      padding: const EdgeInsets.only(left: 8, bottom: 36),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

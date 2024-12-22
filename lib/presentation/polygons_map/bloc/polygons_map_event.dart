@@ -4,6 +4,13 @@ abstract class PolygonsMapEvent extends Equatable {
   const PolygonsMapEvent();
 }
 
+final class RequestLocalizationPermission extends PolygonsMapEvent {
+  const RequestLocalizationPermission();
+
+  @override
+  List<Object?> get props => [];
+}
+
 final class InitializeGoogleMapController extends PolygonsMapEvent {
   const InitializeGoogleMapController(this.googleMapController);
 
